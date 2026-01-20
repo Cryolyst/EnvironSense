@@ -60,6 +60,8 @@ void OLED_setup(){
   oled.begin();
   oled.setPowerSave(0);
   oled.setFont(u8x8_font_7x14_1x2_f);
+
+  // Neat startup sequence
   oled.drawString (0, 0, "-----------------");
   delay(500);
   oled.drawString (0, 1, "-----------------");
@@ -103,6 +105,7 @@ void OLED_Runner(){
   else if (gas > 20) {gasStatus = "LOW ";}
   else {gasStatus = "BAD ";}
 
+  // UI settings
   // Left column (Temperature)
   snprintf(buf, sizeof(buf), "%d C", temp);
   oled.drawString(2, 3, buf);
@@ -129,7 +132,7 @@ void setup() {
 
   Wire.begin();
   pinMode(LED_pin, OUTPUT);
-  for (int i = 1; i <= 5 ; i++){
+  for (int i = 1; i <= 5 ; i++){  // Blinking Sequence to confirm the power is on
     digitalWrite (LED_pin, HIGH);
     delay(200);
     digitalWrite (LED_pin, LOW);
