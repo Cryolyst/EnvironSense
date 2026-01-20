@@ -5,12 +5,12 @@ This project is a compact environmental monitoring system built using an Arduino
 
 The system is designed with embedded constraints in mind:
 
-  Uses I²C for efficient sensor and display communication
+  - Uses I²C for efficient sensor and display communication
 
-  Optimized for low SRAM usage with the U8x8 text-based OLED interface
+  - Optimized for low SRAM usage with the U8x8 text-based OLED interface
 
-  Implements clear, flicker-free UI updates and status indicators
+  - Implements clear, flicker-free UI updates and status indicators
 
-  Interprets raw sensor data into meaningful environmental states (e.g. humidity and air quality levels)
+  - Interprets raw sensor data into meaningful environmental states (e.g. humidity and air quality levels)
 
 This project serves as a practical example of sensor integration, embedded UI design, and hardware-aware firmware development, and is suitable for learning, prototyping, or as a foundation for a custom PCB-based environmental monitor.
