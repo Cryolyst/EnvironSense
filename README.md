@@ -13,4 +13,4 @@ The system is designed with embedded constraints in mind:
 
   - Interprets raw sensor data into meaningful environmental states (e.g. humidity and air quality levels)
 
-This project serves as a practical example of sensor integration, embedded UI design, and hardware-aware firmware development, and is suitable for learning, prototyping, or as a foundation for a custom PCB-based environmental monitor.
+A hands-on project that pulls data from a BME680 and shows it on an OLED, focused on learning sensor integration, embedded UI design, and building firmware that operate within hardware limits.
