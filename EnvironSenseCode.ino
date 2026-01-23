@@ -50,7 +50,6 @@ void BME_setup(){
   bme.setTemperatureOversampling(BME680_OS_8X);
   bme.setHumidityOversampling(BME680_OS_2X);
   bme.setPressureOversampling(BME680_OS_4X);
-  bme.setGasHeater(320, 150); // temp (°C), duration (ms)
 
   Serial.println("BME680 initialized.");
 
@@ -60,8 +59,6 @@ void OLED_setup(){
   oled.begin();
   oled.setPowerSave(0);
   oled.setFont(u8x8_font_7x14_1x2_f);
-
-  // Neat startup sequence
   oled.drawString (0, 0, "-----------------");
   delay(500);
   oled.drawString (0, 1, "-----------------");
@@ -105,7 +102,6 @@ void OLED_Runner(){
   else if (gas > 20) {gasStatus = "LOW ";}
   else {gasStatus = "BAD ";}
 
-  // UI settings
   // Left column (Temperature)
   snprintf(buf, sizeof(buf), "%d C", temp);
   oled.drawString(2, 3, buf);
@@ -132,7 +128,7 @@ void setup() {
 
   Wire.begin();
   pinMode(LED_pin, OUTPUT);
-  for (int i = 1; i <= 5 ; i++){  // Blinking Sequence to confirm the power is on
+  for (int i = 1; i <= 5 ; i++){
     digitalWrite (LED_pin, HIGH);
     delay(200);
     digitalWrite (LED_pin, LOW);
@@ -146,6 +142,16 @@ void setup() {
 }
 
 void loop() {
+
+  // A cycle method is used to determine the air purity to reduce internal heating
+  static int cycle = 0;
+  cycle++;
+
+  if (cycle % 10 == 0) {
+    bme.setGasHeater(320, 150); // enable gas heater
+  } else {
+    bme.setGasHeater(0, 0);    // disable heater for clean temp
+  }
 
   if (!bme.performReading()) {
     Serial.println("Failed to read BME680");
