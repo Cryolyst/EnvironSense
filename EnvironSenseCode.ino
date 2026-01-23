@@ -10,6 +10,7 @@ Adafruit_BME680 bme;
 U8X8_SSD1306_128X64_NONAME_HW_I2C oled(U8X8_PIN_NONE);
 const char* humStatus;
 const char* gasStatus;
+const char* lastGasStatus = "----";
 
 void moduleScanner(){
   byte error;   
@@ -81,9 +82,18 @@ void OLED_setup(){
   oled.drawString (2, 0, "Temp");
   oled.drawString (10, 0, "Hum");
   oled.drawString (10, 4, "Air");
+
+  // Static UI divider
+  oled.drawString(8, 0, "|");
+  oled.drawString(8, 1, "|");
+  oled.drawString(8, 2, "|");
+  oled.drawString(8, 3, "|");
+  oled.drawString(8, 4, "|");
+  oled.drawString(8, 5, "|");
+  oled.drawString(8, 6, "|");
 }
 
-void OLED_Runner(){
+void OLED_Runner(bool gasValid){
 
   char buf[16];
 
@@ -91,17 +101,19 @@ void OLED_Runner(){
   int Ftemp = (int)((bme.temperature * 1.8) + 32);
   int hum = (int)(bme.humidity);
   int gas = (int)(bme.gas_resistance / 1000.0);
+  Serial.println(gas);
 
   if (hum < 30) {humStatus = "DRY  ";}
   else if (hum <= 50) {humStatus = "OK   ";}
   else if (hum <=60) {humStatus = "HUMID";}
   else {humStatus = "HIGH ";}
 
-  if (gas > 100) {gasStatus = "GOOD";}
-  else if (gas > 50) {gasStatus = "OK  ";}
-  else if (gas > 20) {gasStatus = "LOW ";}
-  else {gasStatus = "BAD ";}
-
+  if (gasValid) {
+    if (gas > 100) {lastGasStatus = "GOOD";}
+    else if (gas > 50) {lastGasStatus = "OK  ";}
+    else if (gas > 20) {lastGasStatus = "LOW ";}
+    else {lastGasStatus = "BAD ";}
+  }
   // Left column (Temperature)
   snprintf(buf, sizeof(buf), "%d C", temp);
   oled.drawString(2, 3, buf);
@@ -111,15 +123,8 @@ void OLED_Runner(){
 
   // Right column (Humidity + Air)
   oled.drawString(10, 2, humStatus);
-  oled.drawString(10, 6, gasStatus);
-
-  oled.drawString(8, 0, "|");
-  oled.drawString(8, 1, "|");
-  oled.drawString(8, 2, "|");
-  oled.drawString(8, 3, "|");
-  oled.drawString(8, 4, "|");
-  oled.drawString(8, 5, "|");
-  oled.drawString(8, 6, "|");
+  oled.drawString(10, 6, "    ");
+  oled.drawString(10, 6, lastGasStatus);
 }
 
 void setup() {
@@ -144,11 +149,14 @@ void setup() {
 void loop() {
 
   // A cycle method is used to determine the air purity to reduce internal heating
+  bool gasValid = false;
+  
   static int cycle = 0;
   cycle++;
 
   if (cycle % 10 == 0) {
     bme.setGasHeater(320, 150); // enable gas heater
+    gasValid = true;
   } else {
     bme.setGasHeater(0, 0);    // disable heater for clean temp
   }
@@ -158,6 +166,6 @@ void loop() {
     return;
   }
   
-  OLED_Runner();
+  OLED_Runner(gasValid);
   delay(2000);
 }
