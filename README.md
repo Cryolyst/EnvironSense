@@ -1,16 +1,20 @@
-# EnvironSense
-A compact Arduino-based environmental monitor that measures temperature, humidity, pressure, and air quality using a BME680 sensor and displays real-time data on a monochrome OLED with a low-memory embedded UI.
+# EnvironSense - Embedded Environmental Monitoring System
+EnvironSense is a compact Arduino-based environmental monitoring system that measures temperature, humidity, pressure, and air quality using a BME680 sensor and displays real-time data on a 128×64 monochrome OLED display.
 
-This project is a compact environmental monitoring system built using an Arduino Nano, a BME680 sensor, and a 128×64 monochrome OLED display. It measures and displays real-time temperature (°C/°F), relative humidity, air pressure, and an air quality proxy based on gas resistance.
+The system is built around an Arduino Nano and uses I²C communication to interface with both the BME680 sensor and the OLED display. Environmental data is presented through a lightweight, text-based embedded UI designed to operate within limited SRAM and processing constraints.
 
-The system is designed with embedded constraints in mind:
+Features
 
-  - Uses I²C for efficient sensor and display communication
+Real-time display of temperature (°C/°F), relative humidity, air pressure, and an air quality proxy based on gas resistance
 
-  - Optimized for low SRAM usage with the U8x8 text-based OLED interface
+I²C-based sensor and display communication
 
-  - Implements clear, flicker-free UI updates and status indicators
+Low-memory OLED interface using the U8x8 text-only graphics library
 
-  - Interprets raw sensor data into meaningful environmental states (e.g. humidity and air quality levels)
+Flicker-free UI updates with clear status indicators
 
-A hands-on project that pulls data from a BME680 and shows it on an OLED, focused on learning sensor integration, embedded UI design, and building firmware that operate within hardware limits.
+Interpretation of raw sensor data into qualitative environmental states (e.g., humidity and air quality levels)
+
+Design Focus
+
+This project emphasizes practical embedded systems concepts, including sensor integration, efficient memory usage, and firmware design under hardware constraints. Particular attention was given to balancing system simplicity with usability, resulting in a compact design that remains readable, responsive, and reliable.
