@@ -20,6 +20,5 @@ The system is built around an Arduino Nano and uses I²C communication to interf
 This project emphasizes practical embedded systems concepts, including sensor integration, efficient memory usage, and firmware design under hardware constraints. Particular attention was given to balancing system simplicity with usability, resulting in a compact design that remains readable, responsive, and reliable.
 
 ## Hardware Design
-![Circuit Diagram](circuitDiagram.png)
-![Schematics](PCB_Layout.png)
+![Schematics](Schematic.png)
 ![PCB Layout](PCB_Layout.png)
